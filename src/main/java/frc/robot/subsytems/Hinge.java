@@ -7,6 +7,7 @@ import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -33,7 +34,6 @@ public class Hinge extends SubsystemBase {
     private SmartDashboardNumber outakeL3Angle = new SmartDashboardNumber("Hinge/Angles/Outake Angles/ L3 Angle", 0);
     private SmartDashboardNumber outakeSecondaryL3Angle = new SmartDashboardNumber("Hinge/Angles/Outake Angles/ Special L3 Angle", 0);
     
-
     private Hinge() {
         super();
 
@@ -153,6 +153,5 @@ public class Hinge extends SubsystemBase {
     @Override
     public void periodic() {
         hingeMain.update();
-        
     }
 }
