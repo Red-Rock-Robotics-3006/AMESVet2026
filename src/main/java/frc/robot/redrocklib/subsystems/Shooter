@@ -1,0 +1,80 @@
+package frc.robot.subsystems;
+
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+
+public class Shooter extends SubsystemBase{ //This is shooter position for the Hinge for source intake
+    private final RedRockTalon endEffector = new RedRockTalon(0, "endEffector");
+    private final RedRockTalon InvertedendEffector = new RedRockTalon(1, "followingMotor");
+
+    private SmartDashboardNumber hingeKp = new SmartDashboardNumber("hinge/hingeKp", 0);
+    private SmartDashboardNumber hingeKi = new SmartDashboardNumber("hinge/hingKp", 0);
+    private SmartDashboardNumber hingeKd = new SmartDashboardNumber("hinge/hingKd", 0);
+
+    public void AtRest(double speed){
+        endEffector.speed();
+    }
+    this.endEffector.withMotorOutputConfigs(
+        new MotorOutputConfigs()
+        .withInverted(InvertedValue.CounterClockwise_Positive)
+        .withPeakForwardDutyCycle(1d)
+        .withPeakReverseDutyCycle(-1d)
+        .withNeutralMode(NeutralModeValue.Brake)
+    )
+    .withSlot0Configs(
+        new Slot0Configs()
+        .withKA(0) //TODO
+        .withKS(0) //TODO
+        .withKV(0) //TODO
+        .withKP(0) //TODO
+        .withKI(0) //TODO
+        .withKD(0) //TODO
+    )
+    .withMotionMagicConfigs(
+        new MotionMagicConfigs()
+        .withMotionMagicAcceleration(850)
+        .withMotionMagicCruiseVelocity(150)
+        .withMotionMagicJerk(10000000)
+    )
+    .withSpikeThreshold(17)
+    .withCurrentLimitConfigs(
+        new CurrentLimitsConfigs()
+        .withSupplyCurrentLimit(45)
+        .withSupplyCurrentLimitEnable(true)
+        .withStatorCurrentLimit(60)
+        .withStatorCurrentLimitEnable(true)
+    ).withTuningEnabled(true);
+
+    this.InvertedendEffector.withMotorOutputConfigs(
+        new MotorOutputConfigs()
+        .withInverted(InvertedValue.CounterClockwise_Positive)
+        .withPeakForwardDutyCycle(1d)
+        .withPeakReverseDutyCycle(-1d)
+        .withNeutralMode(NeutralModeValue.Brake)
+    )
+    .withSlot0Configs(
+        new Slot0Configs()
+        .withKA(0) //TODO
+        .withKS(0)
+        .withKV(0)
+        .withKP(0)
+        .withKI(0)
+        .withKD(0)
+    )
+    .withMotionMagicConfigs(
+        new MotionMagicConfigs()
+        .withMotionMagicAcceleration(850)
+        .withMotionMagicCruiseVelocity(150)
+        .withMotionMagicJerk(10000000)
+    )
+    .withSpikeThreshold(17)
+    .withCurrentLimitConfigs(
+        new CurrentLimitsConfigs()
+        .withSupplyCurrentLimit(45)
+        .withSupplyCurrentLimitEnable(true)
+        .withStatorCurrentLimit(60)
+        .withStatorCurrentLimitEnable(true)
+    ).withTuningEnabled(true);
+
+
+}
