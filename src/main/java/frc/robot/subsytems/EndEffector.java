@@ -4,9 +4,12 @@ import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.controls.CoastOut;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -19,8 +22,10 @@ public class EndEffector extends SubsystemBase {
     private RedRockTalon motorTop = new RedRockTalon(0);
     private RedRockTalon motorBottom = new RedRockTalon(0);
 
-    private SmartDashboardNumber intakeSpeed = new SmartDashboardNumber("End Effector/Intake Speed", 0);
-    private SmartDashboardNumber outakeSpeed = new SmartDashboardNumber("End Effector/Outake Speed", 0);
+    private SmartDashboardNumber intakeNormalSpeed = new SmartDashboardNumber("End Effector/Normal Intake Speed", -0.1);
+    private SmartDashboardNumber outakeSpeed = new SmartDashboardNumber("End Effector/Outake Speed", 5);
+
+    private SmartDashboardNumber currentThreshold = new SmartDashboardNumber("End Effector/Current Threshold", 50);
 
     EndEffector() {
         super();
@@ -82,6 +87,40 @@ public class EndEffector extends SubsystemBase {
                 .withTuningEnabled(false)
                 .withFollowerMotor(motorBottom.motor, null);
     }
+
+    private void setIntakeNormal() {
+        motorTop.setMotionMagicVelocity(intakeNormalSpeed.getNumber());
+    }
+
+    private void stopMotors() {
+        motorTop.motor.setControl(new CoastOut());
+    }
+
+    private void setOutake() {
+        motorTop.setMotionMagicVelocity(outakeSpeed.getNumber());
+    }
+
+    //#region Commands
+    public Command intakeCommand(){
+        return new FunctionalCommand(
+                () -> setIntakeNormal(), 
+                () -> {}, 
+                (interrupted) -> stopMotors(), 
+                () -> {
+                        return motorTop.motor.getSupplyCurrent().getValueAsDouble() > currentThreshold.getNumber();
+                },
+                this
+        );
+    }
+
+    public Command outakeCommand() {
+        return Commands.runOnce(() -> setOutake(), this);
+    }
+
+    public Command stopEndEffectorCommand() {
+        return Commands.runOnce(() -> stopMotors(), this);
+    }
+    //#endregion
 
     public static EndEffector getInstance() {
         if (instance == null) {
