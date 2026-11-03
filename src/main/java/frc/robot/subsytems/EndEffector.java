@@ -16,8 +16,8 @@ import frc.robot.redrocklib.wrappers.RedRockTalon;
 public class EndEffector extends SubsystemBase {
     private static EndEffector instance = null;
 
-    private RedRockTalon motorOne = new RedRockTalon(0);
-    private RedRockTalon motorTwo = new RedRockTalon(0);
+    private RedRockTalon motorTop = new RedRockTalon(0);
+    private RedRockTalon motorBottom = new RedRockTalon(0);
 
     private SmartDashboardNumber intakeSpeed = new SmartDashboardNumber("End Effector/Intake Speed", 0);
     private SmartDashboardNumber outakeSpeed = new SmartDashboardNumber("End Effector/Outake Speed", 0);
@@ -25,7 +25,7 @@ public class EndEffector extends SubsystemBase {
     EndEffector() {
         super();
 
-        this.motorTwo.withMotorOutputConfigs(
+        this.motorBottom.withMotorOutputConfigs(
                 new MotorOutputConfigs()
                         .withInverted(InvertedValue.Clockwise_Positive)
                         .withPeakForwardDutyCycle(1d)
@@ -53,7 +53,7 @@ public class EndEffector extends SubsystemBase {
                                 .withStatorCurrentLimitEnable(true))
                 .withTuningEnabled(false);
 
-                this.motorOne.withMotorOutputConfigs(
+                this.motorTop.withMotorOutputConfigs(
                 new MotorOutputConfigs()
                         .withInverted(InvertedValue.Clockwise_Positive)
                         .withPeakForwardDutyCycle(1d)
@@ -80,7 +80,7 @@ public class EndEffector extends SubsystemBase {
                                 .withStatorCurrentLimit(60)
                                 .withStatorCurrentLimitEnable(true))
                 .withTuningEnabled(false)
-                .withFollowerMotor(motorTwo.motor, null);
+                .withFollowerMotor(motorBottom.motor, null);
     }
 
     public static EndEffector getInstance() {
@@ -94,6 +94,6 @@ public class EndEffector extends SubsystemBase {
 
     @Override
     public void periodic() {
-        motorOne.update();
+        motorTop.update();
     }
 }
