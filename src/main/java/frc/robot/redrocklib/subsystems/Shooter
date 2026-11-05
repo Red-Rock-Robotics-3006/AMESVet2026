@@ -11,8 +11,14 @@ public class Shooter extends SubsystemBase{ //This is shooter position for the H
     private SmartDashboardNumber hingeKi = new SmartDashboardNumber("hinge/hingKp", 0);
     private SmartDashboardNumber hingeKd = new SmartDashboardNumber("hinge/hingKd", 0);
 
-    public void AtRest(double speed){
-        endEffector.speed();
+    public void AtRest(){
+        endEffector.speed(0);
+
+    public void Active(double speed){
+        endEffector.speed(speed);
+        InvertedendEffector.speed(speed);
+    }
+
     }
     this.endEffector.withMotorOutputConfigs(
         new MotorOutputConfigs()
