@@ -33,7 +33,6 @@ public class Hinge extends SubsystemBase {
     private SmartDashboardNumber outakeL3Angle = new SmartDashboardNumber("Hinge/Angles/Outake Angles/ L3 Angle", 0);
     private SmartDashboardNumber outakeSecondaryL3Angle = new SmartDashboardNumber("Hinge/Angles/Outake Angles/ Special L3 Angle", 0);
     
-
     private Hinge() {
         super();
 
@@ -153,6 +152,5 @@ public class Hinge extends SubsystemBase {
     @Override
     public void periodic() {
         hingeMain.update();
-        
     }
 }
