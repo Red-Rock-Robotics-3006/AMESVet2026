@@ -1,0 +1,86 @@
+package frc.robot.subsystems;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import com.ctre.phoenix6.configs.MotorOutputConfigs;
+import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.configs.MotionMagicConfigs;
+
+
+public class Shooter extends SubsystemBase{ //This is shooter position for the Hinge for source intake
+    private final RedRockTalon endEffector = new RedRockTalon(0, "endEffector");
+    private final RedRockTalon invertedendEffector = new RedRockTalon(1, "followingMotor");
+    
+    this.endEffector.withMotorOutputConfigs(
+        new MotorOutputConfigs()
+        .withInverted(InvertedValue.CounterClockwise_Positive)
+        .withPeakForwardDutyCycle(1d)
+        .withPeakReverseDutyCycle(-1d)
+        .withNeutralMode(NeutralModeValue.Brake)
+    )
+    .withSlot0Configs(
+        new Slot0Configs()
+        .withKA(0) //TODO
+        .withKS(0) //TODO
+        .withKV(0) //TODO
+        .withKP(0) //TODO
+        .withKI(0) //TODO
+        .withKD(0) //TODO
+    )
+    .withMotionMagicConfigs(
+        new MotionMagicConfigs()
+        .withMotionMagicAcceleration(850)
+        .withMotionMagicCruiseVelocity(150)
+        .withMotionMagicJerk(10000000)
+    )
+    .withSpikeThreshold(17)
+    .withCurrentLimitConfigs(
+        new CurrentLimitsConfigs()
+        .withSupplyCurrentLimit(45)
+        .withSupplyCurrentLimitEnable(true)
+        .withStatorCurrentLimit(60)
+        .withStatorCurrentLimitEnable(true)
+    ).withTuningEnabled(true);
+
+    this.invertedendEffector.withMotorOutputConfigs(
+        new MotorOutputConfigs()
+        .withInverted(InvertedValue.CounterClockwise_Positive)
+        .withPeakForwardDutyCycle(1d)
+        .withPeakReverseDutyCycle(-1d)
+        .withNeutralMode(NeutralModeValue.Brake)
+    )
+    .withSlot0Configs(
+        new Slot0Configs()
+        .withKA(0) //TODO
+        .withKS(0) //TODO
+        .withKV(0) //TODO
+        .withKP(0) //TODO
+        .withKI(0) //TODO
+        .withKD(0) //TODOs
+    )
+    .withMotionMagicConfigs(
+        new MotionMagicConfigs()
+        .withMotionMagicAcceleration(850)
+        .withMotionMagicCruiseVelocity(150)
+        .withMotionMagicJerk(10000000)
+    )
+    .withSpikeThreshold(17)
+    .withCurrentLimitConfigs(
+        new CurrentLimitsConfigs()
+        .withSupplyCurrentLimit(45)
+        .withSupplyCurrentLimitEnable(true)
+        .withStatorCurrentLimit(60)
+        .withStatorCurrentLimitEnable(true)
+    ).withTuningEnabled(true);
+
+    public void AtRest(){
+        endEffector.set(0);
+        invertedendEffector.set(0);
+    }
+    public void ActiveOutput(double speed){
+        endEffector.set(speed);
+        invertedendEffector.set(-speed);
+    }
+    public void ActiveInput(double speed){
+        endEffector.set(-speed);
+        invertedendEffector.set(speed);
+    }
+}
