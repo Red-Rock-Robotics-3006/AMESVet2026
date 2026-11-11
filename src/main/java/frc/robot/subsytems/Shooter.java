@@ -1,5 +1,9 @@
-package frc.robot.subsystems;
+package frc.robot.subsytems;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+import frc.robot.redrocklib.wrappers.RedRockTalon;
+
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
