@@ -17,6 +17,8 @@ public class RobotContainer {
 
   private XboxController driveStick = new XboxController(0);
   
+  private XboxController wristStick = new XboxController(0);
+
   public RobotContainer() {
     configureBindings();
   }

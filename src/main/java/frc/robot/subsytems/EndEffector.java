@@ -5,7 +5,9 @@ import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.controls.CoastOut;
+import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -19,73 +21,47 @@ import frc.robot.redrocklib.wrappers.RedRockTalon;
 public class EndEffector extends SubsystemBase {
     private static EndEffector instance = null;
 
-    private RedRockTalon motorTop = new RedRockTalon(0);
-    private RedRockTalon motorBottom = new RedRockTalon(0);
+    private RedRockTalon motorTop = new RedRockTalon(0); //TODO
+    // private RedRockTalon motorBottom = new RedRockTalon(0);
 
     private SmartDashboardNumber intakeNormalSpeed = new SmartDashboardNumber("End Effector/Normal Intake Speed", -0.1);
-    private SmartDashboardNumber outakeSpeed = new SmartDashboardNumber("End Effector/Outake Speed", 5);
+    private SmartDashboardNumber outakeL1Speed = new SmartDashboardNumber("End Effector/Outake L1 Speed", 5);
+    private SmartDashboardNumber outakeL2Speed = new SmartDashboardNumber("End Effector/Outake L2 Speed", 5);
+    private SmartDashboardNumber outakeL3Speed = new SmartDashboardNumber("End Effector/Outake L3 Speed", 5);
 
     private SmartDashboardNumber currentThreshold = new SmartDashboardNumber("End Effector/Current Threshold", 50);
 
     EndEffector() {
         super();
 
-        this.motorBottom.withMotorOutputConfigs(
-                new MotorOutputConfigs()
-                        .withInverted(InvertedValue.Clockwise_Positive)
-                        .withPeakForwardDutyCycle(1d)
-                        .withPeakReverseDutyCycle(-1d)
-                        .withNeutralMode(NeutralModeValue.Coast))
-                .withSlot0Configs(
-                        new Slot0Configs()
-                                .withKA(0)
-                                .withKS(0)
-                                .withKV(0)
-                                .withKP(0)
-                                .withKI(0)
-                                .withKD(0))
-                .withMotionMagicConfigs(
-                        new MotionMagicConfigs()
-                                .withMotionMagicAcceleration(850)
-                                .withMotionMagicCruiseVelocity(150)
-                                .withMotionMagicJerk(10000000))
-                .withSpikeThreshold(17)
-                .withCurrentLimitConfigs(
-                        new CurrentLimitsConfigs()
-                                .withSupplyCurrentLimit(45)
-                                .withSupplyCurrentLimitEnable(true)
-                                .withStatorCurrentLimit(60)
-                                .withStatorCurrentLimitEnable(true))
-                .withTuningEnabled(false);
-
-                this.motorTop.withMotorOutputConfigs(
-                new MotorOutputConfigs()
-                        .withInverted(InvertedValue.Clockwise_Positive)
-                        .withPeakForwardDutyCycle(1d)
-                        .withPeakReverseDutyCycle(-1d)
-                        .withNeutralMode(NeutralModeValue.Coast))
-                .withSlot0Configs(
-                        new Slot0Configs()
-                                .withKA(0)
-                                .withKS(0)
-                                .withKV(0)
-                                .withKP(0)
-                                .withKI(0)
-                                .withKD(0))
-                .withMotionMagicConfigs(
-                        new MotionMagicConfigs()
-                                .withMotionMagicAcceleration(850)
-                                .withMotionMagicCruiseVelocity(150)
-                                .withMotionMagicJerk(10000000))
-                .withSpikeThreshold(17)
-                .withCurrentLimitConfigs(
-                        new CurrentLimitsConfigs()
-                                .withSupplyCurrentLimit(45)
-                                .withSupplyCurrentLimitEnable(true)
-                                .withStatorCurrentLimit(60)
-                                .withStatorCurrentLimitEnable(true))
-                .withTuningEnabled(false)
-                .withFollowerMotor(motorBottom.motor, null);
+        this.motorTop.withMotorOutputConfigs(
+        new MotorOutputConfigs()
+                .withInverted(InvertedValue.Clockwise_Positive)
+                .withPeakForwardDutyCycle(1d)
+                .withPeakReverseDutyCycle(-1d)
+                .withNeutralMode(NeutralModeValue.Coast))
+        .withSlot0Configs(
+                new Slot0Configs()
+                        .withKA(0)
+                        .withKS(0)
+                        .withKV(0)
+                        .withKP(0)
+                        .withKI(0)
+                        .withKD(0))
+        .withMotionMagicConfigs(
+                new MotionMagicConfigs()
+                        .withMotionMagicAcceleration(850)
+                        .withMotionMagicCruiseVelocity(150)
+                        .withMotionMagicJerk(10000000))
+        .withSpikeThreshold(17)
+        .withCurrentLimitConfigs(
+                new CurrentLimitsConfigs()
+                        .withSupplyCurrentLimit(45)
+                        .withSupplyCurrentLimitEnable(true)
+                        .withStatorCurrentLimit(60)
+                        .withStatorCurrentLimitEnable(true))
+        .withTuningEnabled(false)
+        .withFollowerMotor(new TalonFX(0), MotorAlignmentValue.Opposed); //TODO
     }
 
     private void setIntakeNormal() {
@@ -96,8 +72,16 @@ public class EndEffector extends SubsystemBase {
         motorTop.motor.setControl(new CoastOut());
     }
 
-    private void setOutake() {
-        motorTop.setMotionMagicVelocity(outakeSpeed.getNumber());
+    private void setL1Outake() {
+        motorTop.setMotionMagicVelocity(outakeL1Speed.getNumber());
+    }
+
+    private void setL2Outake() {
+        motorTop.setMotionMagicVelocity(outakeL2Speed.getNumber());
+    }
+
+    private void setL3Outake() {
+        motorTop.setMotionMagicVelocity(outakeL3Speed.getNumber());
     }
 
     //#region Commands
@@ -113,8 +97,16 @@ public class EndEffector extends SubsystemBase {
         );
     }
 
-    public Command outakeCommand() {
-        return Commands.runOnce(() -> setOutake(), this);
+    public Command outakeL1Command() {
+        return Commands.runOnce(() -> setL1Outake(), this);
+    }
+
+    public Command outakeL2Command() {
+        return Commands.runOnce(() -> setL2Outake(), this);
+    }
+
+    public Command outakeL3Command() {
+        return Commands.runOnce(() -> setL3Outake(), this);
     }
 
     public Command stopEndEffectorCommand() {

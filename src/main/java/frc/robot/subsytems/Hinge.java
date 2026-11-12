@@ -4,7 +4,9 @@ import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -18,8 +20,8 @@ public class Hinge extends SubsystemBase {
 
     private static Hinge instance = null;
     
-    private final RedRockTalon hingeMain = new RedRockTalon(0, "Hinge/Hinge Motor Main");
-    private final RedRockTalon hingeFollow = new RedRockTalon(0, "Hinge/Hinge Motor Follow");
+    private final RedRockTalon hingeMain = new RedRockTalon(0, "Hinge/Hinge Motor Main");//TODO
+    // private final RedRockTalon hingeFollow = new RedRockTalon(0, "Hinge/Hinge Motor Follow");
 
     private SmartDashboardNumber stowAngle = new SmartDashboardNumber("Hinge/Angles/Stow Angle", 0);
 
@@ -36,62 +38,34 @@ public class Hinge extends SubsystemBase {
     private Hinge() {
         super();
 
-        this.hingeFollow.withMotorOutputConfigs(
-                new MotorOutputConfigs()
-                        .withInverted(InvertedValue.Clockwise_Positive)
-                        .withPeakForwardDutyCycle(1d)
-                        .withPeakReverseDutyCycle(-1d)
-                        .withNeutralMode(NeutralModeValue.Coast))
-                .withSlot0Configs(
-                        new Slot0Configs()
-                                .withKA(0)
-                                .withKS(0)
-                                .withKV(0)
-                                .withKP(0)
-                                .withKI(0)
-                                .withKD(0))
-                .withMotionMagicConfigs(
-                        new MotionMagicConfigs()
-                                .withMotionMagicAcceleration(850)
-                                .withMotionMagicCruiseVelocity(150)
-                                .withMotionMagicJerk(10000000))
-                .withSpikeThreshold(17)
-                .withCurrentLimitConfigs(
-                        new CurrentLimitsConfigs()
-                                .withSupplyCurrentLimit(45)
-                                .withSupplyCurrentLimitEnable(true)
-                                .withStatorCurrentLimit(60)
-                                .withStatorCurrentLimitEnable(true))
-                .withTuningEnabled(false);
-
-                this.hingeMain.withMotorOutputConfigs(
-                new MotorOutputConfigs()
-                        .withInverted(InvertedValue.Clockwise_Positive)
-                        .withPeakForwardDutyCycle(1d)
-                        .withPeakReverseDutyCycle(-1d)
-                        .withNeutralMode(NeutralModeValue.Coast))
-                .withSlot0Configs(
-                        new Slot0Configs()
-                                .withKA(0)
-                                .withKS(0)
-                                .withKV(0)
-                                .withKP(0)
-                                .withKI(0)
-                                .withKD(0))
-                .withMotionMagicConfigs(
-                        new MotionMagicConfigs()
-                                .withMotionMagicAcceleration(850)
-                                .withMotionMagicCruiseVelocity(150)
-                                .withMotionMagicJerk(10000000))
-                .withSpikeThreshold(17)
-                .withCurrentLimitConfigs(
-                        new CurrentLimitsConfigs()
-                                .withSupplyCurrentLimit(45)
-                                .withSupplyCurrentLimitEnable(true)
-                                .withStatorCurrentLimit(60)
-                                .withStatorCurrentLimitEnable(true))
-                .withTuningEnabled(false)
-                .withFollowerMotor(hingeFollow.motor, null);
+        this.hingeMain.withMotorOutputConfigs(
+        new MotorOutputConfigs()
+                .withInverted(InvertedValue.Clockwise_Positive)
+                .withPeakForwardDutyCycle(1d)
+                .withPeakReverseDutyCycle(-1d)
+                .withNeutralMode(NeutralModeValue.Coast))
+        .withSlot0Configs(
+                new Slot0Configs()
+                        .withKA(0)
+                        .withKS(0)
+                        .withKV(0)
+                        .withKP(0)
+                        .withKI(0)
+                        .withKD(0))
+        .withMotionMagicConfigs(
+                new MotionMagicConfigs()
+                        .withMotionMagicAcceleration(850)
+                        .withMotionMagicCruiseVelocity(150)
+                        .withMotionMagicJerk(10000000))
+        .withSpikeThreshold(17)
+        .withCurrentLimitConfigs(
+                new CurrentLimitsConfigs()
+                        .withSupplyCurrentLimit(45)
+                        .withSupplyCurrentLimitEnable(true)
+                        .withStatorCurrentLimit(60)
+                        .withStatorCurrentLimitEnable(true))
+        .withTuningEnabled(false)
+        .withFollowerMotor(new TalonFX(0), MotorAlignmentValue.Opposed); //TODO
     }
 
     private void setPosition(double position) {
