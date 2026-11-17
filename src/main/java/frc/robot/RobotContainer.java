@@ -14,7 +14,7 @@ public class RobotContainer {
   private static Hinge wrist = Hinge.getInstance();
   private static EndEffector endEffector = EndEffector.getInstance();
 
-  private WristState CurrentWristState;
+  private WristState currentWristState;
 
   private enum WristState {
     STOW(wrist.stowAngleCommand(), endEffector.stopEndEffectorCommand()),
@@ -44,7 +44,6 @@ public class RobotContainer {
   }
 
   private CommandXboxController driveStick = new CommandXboxController(0);
-
   private CommandXboxController wristStick = new CommandXboxController(0);
 
   public RobotContainer() {
@@ -52,13 +51,34 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    // driveStick.leftTrigger(0.85)
-    //     .onTrue(getAutonomousCommand())
-    //     .onFalse(getAutonomousCommand());
+    ////#region -- Wrist Stick Bindings --
+    wristStick.povLeft()
+      .whileTrue(WristState.L1.getAngleSetCommand());
 
-    // driveStick.rightTrigger(0.85)
-    //     .onTrue(wrist.outakeL1AngleCommand())
-    //     .onFalse(getAutonomousCommand());
+    wristStick.povUp()
+      .whileTrue(WristState.L2.getAngleSetCommand());
+
+    wristStick.povRight()
+      .whileTrue(WristState.L3.getAngleSetCommand());
+
+    wristStick.a()
+      .whileTrue(WristState.DOCK.getAngleSetCommand());
+
+    wristStick.b()
+      .whileTrue(WristState.SHELF.getAngleSetCommand());
+
+    wristStick.x()
+      .whileTrue(WristState.INTAKESHELL.getAngleSetCommand());
+
+    wristStick.y()
+      .whileTrue(WristState.INTAKECELL.getAngleSetCommand());
+
+    wristStick.rightStick()
+      .whileTrue(WristState.STOW.getAngleSetCommand());//#endregion
+
+    driveStick.rightTrigger(0.85)
+      .whileTrue(currentWristState.getEndEffectorCommand())
+      .whileFalse(endEffector.stopEndEffectorCommand());
   }
 
   public Command getAutonomousCommand() {
