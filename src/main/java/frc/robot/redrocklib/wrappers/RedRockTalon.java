@@ -99,6 +99,7 @@ public class RedRockTalon {
      * @param outPutConfigs
      * @param slot0Configs
      */
+    @SuppressWarnings("removal")
     public RedRockTalon(int motorID, String name, String canivore, MotorOutputConfigs outPutConfigs, Slot0Configs slot0Configs) {
         this.motor = new TalonFX(motorID, canivore);
 
