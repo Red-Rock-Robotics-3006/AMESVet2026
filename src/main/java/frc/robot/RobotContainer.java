@@ -79,6 +79,8 @@ public class RobotContainer {
     driveStick.rightTrigger(0.85)
       .whileTrue(currentWristState.getEndEffectorCommand())
       .whileFalse(endEffector.stopEndEffectorCommand());
+
+      //TODO add swerve
   }
 
   public Command getAutonomousCommand() {

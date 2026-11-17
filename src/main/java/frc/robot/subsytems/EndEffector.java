@@ -28,7 +28,7 @@ public class EndEffector extends SubsystemBase {
     private SmartDashboardNumber outakeL1Speed = new SmartDashboardNumber("End Effector/Outake L1 Speed", 5);
     private SmartDashboardNumber outakeL2Speed = new SmartDashboardNumber("End Effector/Outake L2 Speed", 5);
     private SmartDashboardNumber outakeL3Speed = new SmartDashboardNumber("End Effector/Outake L3 Speed", 5);
-
+//TODO add more seperate speeds if needed.
     private SmartDashboardNumber currentThreshold = new SmartDashboardNumber("End Effector/Current Threshold", 50);
 
     EndEffector() {

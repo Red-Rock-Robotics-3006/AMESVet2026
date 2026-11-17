@@ -107,7 +107,7 @@ public class Hinge extends SubsystemBase {
 
     public Command stowAngleCommand() {
         return Commands.runOnce(() -> setPosition(stowAngle.getNumber()), this);
-    }
+    }//TODO make stowing reset the angle and rely on current limitations and hardstop
 
     public Command outakeSecondaryL3AngleCommand() {
         return Commands.runOnce(() -> setPosition(outakeSecondaryL3Angle.getNumber()), this);
