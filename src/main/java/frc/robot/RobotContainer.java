@@ -53,32 +53,32 @@ public class RobotContainer {
   private void configureBindings() {
     ////#region -- Wrist Stick Bindings --
     wristStick.povLeft()
-      .whileTrue(WristState.L1.getAngleSetCommand());
+      .onTrue(WristState.L1.getAngleSetCommand());
 
     wristStick.povUp()
-      .whileTrue(WristState.L2.getAngleSetCommand());
+      .onTrue(WristState.L2.getAngleSetCommand());
 
     wristStick.povRight()
-      .whileTrue(WristState.L3.getAngleSetCommand());
+      .onTrue(WristState.L3.getAngleSetCommand());
 
     wristStick.a()
-      .whileTrue(WristState.DOCK.getAngleSetCommand());
+      .onTrue(WristState.DOCK.getAngleSetCommand());
 
     wristStick.b()
-      .whileTrue(WristState.SHELF.getAngleSetCommand());
+      .onTrue(WristState.SHELF.getAngleSetCommand());
 
     wristStick.x()
-      .whileTrue(WristState.INTAKESHELL.getAngleSetCommand());
+      .onTrue(WristState.INTAKESHELL.getAngleSetCommand());
 
     wristStick.y()
-      .whileTrue(WristState.INTAKECELL.getAngleSetCommand());
+      .onTrue(WristState.INTAKECELL.getAngleSetCommand());
 
     wristStick.rightStick()
-      .whileTrue(WristState.STOW.getAngleSetCommand());//#endregion
+      .onTrue(WristState.STOW.getAngleSetCommand());//#endregion
 
     driveStick.rightTrigger(0.85)
-      .whileTrue(currentWristState.getEndEffectorCommand())
-      .whileFalse(endEffector.stopEndEffectorCommand());
+      .onTrue(currentWristState.getEndEffectorCommand())
+      .onFalse(endEffector.stopEndEffectorCommand());
 
       //TODO add swerve
   }
