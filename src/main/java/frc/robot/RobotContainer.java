@@ -4,11 +4,15 @@
 
 package frc.robot;
 
+import com.ctre.phoenix6.swerve.SwerveRequest;
+
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsytems.Hinge;
+import frc.robot.subsytems.swerve.CommandSwerveDrivetrain;
+import frc.robot.redrocklib.logging.SmartDashboardNumber;
 import frc.robot.subsytems.Autos;
 import frc.robot.subsytems.EndEffector;
 
@@ -16,7 +20,12 @@ public class RobotContainer {
   private static Hinge wrist = Hinge.getInstance();
   private static EndEffector endEffector = EndEffector.getInstance();
   private static Autos autonomous = Autos.getInstance();
+  private static CommandSwerveDrivetrain csd = CommandSwerveDrivetrain.getInstance();
   private SendableChooser<Command> chooser = new SendableChooser<>();
+  private final SwerveRequest.FieldCentric csdRequest = new SwerveRequest.FieldCentric().withDeadband(0.1);
+
+  private SmartDashboardNumber maxTranslationProportion = new SmartDashboardNumber("Swerve/Max Translation Proportion", 0.7);
+  private SmartDashboardNumber maxRotationProportion = new SmartDashboardNumber("Swerve/Max Rotation Proportion", 0.7);
 
   private WristState currentWristState;
 
@@ -91,7 +100,9 @@ public class RobotContainer {
       .onTrue(currentWristState.getEndEffectorCommand())
       .onFalse(endEffector.stopEndEffectorCommand());
 
-      //TODO add swerve
+    csd.setDefaultCommand(csd.applyRequest(() -> csdRequest.withVelocityX(-driveStick.getLeftY()*maxTranslationProportion.getNumber())
+    													   .withVelocityY(-driveStick.getLeftX()*maxTranslationProportion.getNumber())
+														   .withRotationalRate(-driveStick.getRightX()*maxRotationProportion.getNumber())));
   }
 
   public Command getAutonomousCommand() {
