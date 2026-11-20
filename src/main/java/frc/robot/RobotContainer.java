@@ -4,15 +4,21 @@
 
 package frc.robot;
 
+import java.util.Vector;
+
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsytems.Hinge;
+import frc.robot.subsytems.Autos;
 import frc.robot.subsytems.EndEffector;
 
 public class RobotContainer {
   private static Hinge wrist = Hinge.getInstance();
   private static EndEffector endEffector = EndEffector.getInstance();
+  private static Autos autonomous = Autos.getInstance();
+  private SendableChooser<Command> chooser = new SendableChooser<>();
 
   private WristState currentWristState;
 
@@ -47,7 +53,14 @@ public class RobotContainer {
   private CommandXboxController wristStick = new CommandXboxController(0);
 
   public RobotContainer() {
+    configureAutoChooser();
     configureBindings();
+  }
+
+  private void configureAutoChooser() {
+    chooser.setDefaultOption("No Auto", Commands.runOnce(() -> System.out.print("NO AUTOS FOR YOU!")));
+    chooser.addOption("Test", autonomous.test());
+    chooser.addOption("Preloaded Doughnut", autonomous.preloadedDoughnut());
   }
 
   private void configureBindings() {
@@ -84,6 +97,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return Commands.print("No autonomous command configured");
+    return chooser.getSelected();
   }
 }
