@@ -2,6 +2,9 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+// To veiw the controller bindings there is a PadCrafter link here:
+// https://www.padcrafter.com/?col=%23242424%2C%23606A6E%2C%23FFFFFF&outline=5.5&templates=Wrist%2FArm%2FHinge+Controller+Scheme%7CDriver+Controller+Scheme&plat=0&timestamp=1794953988299&leftStick=%7CSwerve%3A+Translation&rightStick=&dpadDown=&rightStickClick=Stow+Wrist%7CSwerve%3A+Rotation&dpadLeft=Level+1&dpadRight=Level+2&dpadUp=Level+3&xButton=Intake+Shell+Pos&yButton=Intake+Cell+Pos&leftTrigger=&rightTrigger=%7CSpin+End+Effector%28Speed%2FDirection+Based+of+Wrist+Pos%29&aButton=Dock+Angle&bButton=Shelf+Angle
+
 package frc.robot;
 
 import com.ctre.phoenix6.swerve.SwerveRequest;
