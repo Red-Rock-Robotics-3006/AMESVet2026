@@ -27,6 +27,7 @@ public class Hinge extends SubsystemBase {
     private SmartDashboardNumber currentThreshold = new SmartDashboardNumber("End Effector/Current Threshold", 50);
     private SmartDashboardNumber normalSpeed = new SmartDashboardNumber("Hinge/Reset/Normal Speed", -0.1);
 
+    @SuppressWarnings(value = { "unused" })
     private SmartDashboardNumber stowAngle = new SmartDashboardNumber("Hinge/Angles/Stow Angle", 0);
 
     private SmartDashboardNumber intakeShellAngle = new SmartDashboardNumber("Hinge/Angles/Intake Angles/ Shell Angle", 10);

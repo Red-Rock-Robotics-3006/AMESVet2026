@@ -2,7 +2,9 @@ package frc.robot.subsytems;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.subsytems.swerve.CommandSwerveDrivetrain;
 
+@SuppressWarnings("unused")
 public class Autos {
     private static Autos instance = null;
     private Hinge wrist = Hinge.getInstance();
